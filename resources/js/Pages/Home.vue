@@ -2,6 +2,21 @@
 import { Head, Link } from '@inertiajs/vue3';
 </script>
 
+<style scoped>
+.disk {
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+.disk {
+        animation-name: spin;
+        animation-timing-function: linear;
+    }
+    @keyframes spin {
+        from { transform: rotate(0deg) }
+        to { transform: rotate(360deg) }
+    }
+</style>
+
 <template>
     <Head title="Home" />
 
@@ -11,7 +26,7 @@ import { Head, Link } from '@inertiajs/vue3';
         <div class="bg-white px-8 py-6 shadow-md mt-10 rounded-lg" style="width: 490px;">
 
             <div class="grid grid-cols-1 text-center">
-                <div class="text-gray-600">
+                <div class="text-gray-600 font-bold">
                     🎵 NOW PLAYING 🎵
                 </div>
             </div>
@@ -27,7 +42,7 @@ import { Head, Link } from '@inertiajs/vue3';
                     <img 
                         class="absolute disk top-0 z-0"
                         style="width: 300px; left: 115px; z-index: 0;"
-                        src="https://i.postimg.cc/ZqhVJxg3/CD.png"
+                        src="images/CD.png"
                         alt="cd"
                     >
                 </div>
@@ -61,17 +76,23 @@ import { Head, Link } from '@inertiajs/vue3';
             </div>
 
             <div class="mt-10 grid grid-cols-1 text-center">
-                <div class="text-gray-600">
+                <div class="text-indigo-600">
                     VOTE FOR THIS TRACK
                 </div>
             </div>
 
-            <div class="mt-5 grid grid-cols-2 gap-4">
-                <div class="text-center text-2xl">
-                    👍
+            <div class="mt-4 grid grid-cols-2 gap-4">
+                <div class="text-right text-2xl">
+                    <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                        Yeah
+                        👍
+                    </button>
                 </div>
-                <div class="text-center text-2xl">
-                    👎
+                <div class="text-left text-2xl">
+                    <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                        Nah
+                        👎
+                    </button>
                 </div>
             </div>
 
