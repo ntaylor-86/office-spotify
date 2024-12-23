@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccessToken;
+use App\Spotify\Spotify;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HomeController extends Controller
 {
+    /**
+     * index
+     * 
+     */
     public function index()
     {
         $accessToken = AccessToken::first();
@@ -19,9 +24,13 @@ class HomeController extends Controller
 
         // Checking if the AccessToken is expired
         if ($accessToken->expirationTime->lessThan(now())) {
-            return redirect()->route('get-token');
+            return redirect()->route('refresh-token');
         }
 
-        return Inertia::render('Home');
+        $currentTrack = Spotify::GetCurrentTrack($accessToken->accessToken);
+
+        return Inertia::render('Home', [
+            'currentTrack' => $currentTrack['data']
+        ]);
     }
 }

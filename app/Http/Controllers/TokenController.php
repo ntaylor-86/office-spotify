@@ -10,6 +10,11 @@ use SpotifyWebAPI\SpotifyWebAPI;
 
 class TokenController extends Controller
 {
+    /**
+     * scopes
+     * 
+     * @var array
+     */
     public $scopes = [
         'playlist-read-private',
         'playlist-read-collaborative',
@@ -20,9 +25,18 @@ class TokenController extends Controller
         'user-read-playback-state'
     ];
 
+
+    /**
+     * Index
+     * 
+     */
     public function index()
     {
-        $session = new Session(env('SPOTIFY_CLIENT_ID'),env('SPOTIFY_CLIENT_SECRET'), route('get-token'));
+        $session = new Session(
+            clientId: env('SPOTIFY_CLIENT_ID'),
+            clientSecret: env('SPOTIFY_CLIENT_SECRET'),
+            redirectUri: route('get-token')
+        );
         $api = new SpotifyWebAPI();
 
         if (isset($_GET['code'])) {
@@ -49,5 +63,31 @@ class TokenController extends Controller
             header('Location: ' . $session->getAuthorizeUrl($options));
             die();
         }
+    }
+
+    /**
+     * Refresh Token
+     * 
+     */
+    public function refreshToken()
+    {
+        $accessToken = AccessToken::first();
+
+        $session = new Session(
+            clientId: env('SPOTIFY_CLIENT_ID'),
+            clientSecret: env('SPOTIFY_CLIENT_SECRET'),
+            redirectUri: route('get-token')
+        );
+        $session->refreshAccessToken($accessToken->refreshToken);
+
+        // dd($session);
+
+        $accessToken->accessToken = $session->getAccessToken();
+        $accessToken->refreshToken = $session->getRefreshToken();
+        $expirationTime = Carbon::parse($session->getTokenExpiration())->setTimezone('Australia/Brisbane');
+        $accessToken->expirationTime = $expirationTime;
+        $accessToken->save();
+
+        return redirect()->route('home');
     }
 }
