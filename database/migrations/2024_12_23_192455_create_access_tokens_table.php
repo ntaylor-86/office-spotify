@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->string('accessToken');
+            $table->longText('accessToken');
             $table->dateTime('expirationTime');
             $table->string('redirectUri');
-            $table->string('refreshToken');
+            $table->longText('refreshToken');
             $table->string('scope');
         });
     }
