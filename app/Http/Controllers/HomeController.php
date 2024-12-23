@@ -10,13 +10,18 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Home');
-
         $accessToken = AccessToken::first();
 
+        // Checking if an AccessToken exists
         if (is_null($accessToken)) {
-            return redirect(route('get-token'));
+            return redirect()->route('get-token');
         }
 
+        // Checking if the AccessToken is expired
+        if ($accessToken->expirationTime->lessThan(now())) {
+            return redirect()->route('get-token');
+        }
+
+        return Inertia::render('Home');
     }
 }
