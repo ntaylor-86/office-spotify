@@ -2,19 +2,17 @@
 import { ref } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 
-const loading = ref(false);
-const nowPlaying = ref({
-    uri: 'spotify:track:78FzQfooQzB43sGzlpI2At',
-    artist: 'The Goo Goo Dolls',
-    track: 'Dizzy up the Girl',
-    releaseDate: '1998',
-    cover: 'https://i.scdn.co/image/ab67616d00001e02eda9478c39a21e1cdc6609ca'
+defineProps({
+    currentTrack: {
+        type: Object,
+        required: true
+    }
 });
 </script>
 
 <style scoped>
 .disk {
-    animation-duration: 5s;
+    animation-duration: 7s;
     animation-iteration-count: infinite;
 }
 .disk {
@@ -45,8 +43,8 @@ const nowPlaying = ref({
                 <div class="relative">
                     <img 
                         class="relative rounded drop-shadow-md"
-                        style="z-index: 10;"
-                        :src="nowPlaying.cover"
+                        style="z-index: 10; width: 300px;"
+                        :src="currentTrack.cover"
                         alt="cover"
                     >
                     <img 
@@ -64,7 +62,7 @@ const nowPlaying = ref({
                         Artist:
                     </span>
                     <span class="tracking-wide text-gray-400">
-                        {{ nowPlaying.artist }}
+                        {{ currentTrack.artist }}
                     </span>
                 </div>
                 <div>
@@ -72,7 +70,7 @@ const nowPlaying = ref({
                         Track:
                     </span>
                     <span class="tracking-wide text-gray-400">
-                        {{ nowPlaying.track }}
+                        {{ currentTrack.track }}
                     </span>
                 </div>
                 <div>
@@ -80,7 +78,7 @@ const nowPlaying = ref({
                         Release Date:
                     </span>
                     <span class="tracking-wide text-gray-400">
-                        {{ nowPlaying.releaseDate }}
+                        {{ currentTrack.releaseDate }}
                     </span>
                 </div>
             </div>
