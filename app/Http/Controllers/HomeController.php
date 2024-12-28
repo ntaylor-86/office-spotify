@@ -24,10 +24,11 @@ class HomeController extends Controller
 
         // Checking if the AccessToken is expired
         if ($accessToken->expirationTime->lessThan(now())) {
-            return redirect()->route('refresh-token');
+            return redirect()->route('token.refresh');
         }
 
         $currentTrack = Spotify::GetCurrentTrack($accessToken->accessToken);
+        // dd($currentTrack);
 
         return Inertia::render('Home', [
             'currentTrack' => $currentTrack['data']
