@@ -17,7 +17,7 @@ import NavLink from '@/Components/NavLink.vue';
                                 <Link :href="home">
                                     <img src="images/spotify-icon.svg" class="h-9 inline">
                                     <span class="text-green-500 ml-2">
-                                        Office Spotify
+                                        GCI's Office Spotify
                                     </span>
                                 </Link>
                             </div>
