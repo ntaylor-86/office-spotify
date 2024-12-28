@@ -9,6 +9,10 @@ use SpotifyWebAPI\SpotifyWebAPI;
 
 class SpotifyController extends Controller
 {
+    /**
+     * Current Track
+     * 
+     */
     public function currentTrack()
     {
         $accessToken = AccessToken::firstOrFail();

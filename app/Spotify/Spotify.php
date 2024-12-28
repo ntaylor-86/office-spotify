@@ -24,12 +24,19 @@ class Spotify
                 ];
             }
 
+            // Getting the release year from the Spotify API
+            $regex = "/\d{4}/";
+            $releaseDate = $currentTrack->item->album->release_date;
+            if (preg_match($regex, $releaseDate, $matches) > 0) {
+                $releaseDate = $matches[0];
+            }
+
             return [
                 'data' => [
                     'uri' => $currentTrack->item->uri,
                     'artist' => $currentTrack->item->artists[0]->name,
                     'track' => $currentTrack->item->name,
-                    'releaseDate' => $currentTrack->item->album->release_date,
+                    'releaseDate' => $releaseDate,
                     'cover' => $currentTrack->item->album->images[0]->url
                 ]
             ];
