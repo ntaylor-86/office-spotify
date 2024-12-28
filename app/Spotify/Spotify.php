@@ -45,6 +45,7 @@ class Spotify
                     'track' => $currentTrack->item->name,
                     'releaseDate' => $releaseDate,
                     'cover' => $currentTrack->item->album->images[0]->url,
+                    'isPlaying' => $currentTrack->is_playing,
                     'progress' => $progressPercentage
                 ]
             ];

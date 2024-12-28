@@ -57,7 +57,7 @@ usePoll(10000);
             <div class="bg-white px-8 py-6 shadow-md mt-10 rounded-lg" style="width: 490px;">
 
                 <div class="grid grid-cols-1 text-center">
-                    <div v-if="currentTrack === null" class="text-gray-600 font-bold tracking-widest">
+                    <div v-if="currentTrack === null || currentTrack.isPlaying == false" class="text-gray-600 font-bold tracking-widest">
                         ⏸️ PAUSED ⏸️
                     </div>
                     <div v-else class="text-gray-600 font-bold tracking-widest">
@@ -94,12 +94,21 @@ usePoll(10000);
                             >
                         </div>
                         <img 
-                            class="absolute disk top-0 z-0"
+                            class="absolute top-0 z-0"
+                            :class="{ disk: currentTrack.isPlaying }"
                             style="width: 298px; top: 1px; left: 125px; z-index: 0;"
                             src="images/CD.png"
                             alt="cd"
                         >
                     </div>
+                </div>
+
+                <div class="mt-5">
+
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-green-500 h-2.5 rounded-full" :style="{ 'width': currentTrack.progress + '%'}"></div>
+                    </div>
+
                 </div>
 
                 <!-- Track Info -->
@@ -128,7 +137,7 @@ usePoll(10000);
                     </div>
                     <div>
                         <span class="text-xs tracking-wide text-emerald-400">
-                            Release Date:
+                            Released:
                         </span>
                         <span v-if="currentTrack === null" class="tracking-wide text-gray-400">
                             
