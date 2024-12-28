@@ -13,8 +13,9 @@ use SpotifyWebAPI\SpotifyWebAPI;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/get-token', [TokenController::class, 'index'])->name('get-token');
-Route::get('/refresh-token', [TokenController::class, 'refreshToken'])->name('refresh-token');
+Route::get('/token', [TokenController::class, 'index'])->name('token.index');
+Route::get('/token/get', [TokenController::class, 'tokenGet'])->name('token.get');
+Route::get('/token/refresh', [TokenController::class, 'tokenRefresh'])->name('token.refresh');
 
 
 Route::prefix('spotify')->name('spotify.')->group(function () {

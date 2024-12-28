@@ -43,7 +43,7 @@ defineProps({
                 </div>
             </div>
 
-            <!-- Cover -->
+            <!-- Cover & CD -->
             <div v-if="currentTrack === null" class="mt-10">
                 <div class="relative">
                     <img
@@ -63,12 +63,14 @@ defineProps({
 
             <div v-else class="mt-10">
                 <div class="relative">
-                    <img 
-                        class="relative rounded drop-shadow-md"
-                        style="z-index: 10; width: 300px;"
-                        :src="currentTrack.cover"
-                        alt="cover"
-                    >
+                    <div class=" bg-slate-500 rounded relative" style="width: 300px; height: 300px; z-index: 20;">
+                        <img 
+                            class="rounded drop-shadow-md"
+                            style="z-index: 10; width: 300px;"
+                            :src="currentTrack.cover"
+                            alt="cover"
+                        >
+                    </div>
                     <img 
                         class="absolute disk top-0 z-0"
                         style="width: 298px; top: 1px; left: 125px; z-index: 0;"

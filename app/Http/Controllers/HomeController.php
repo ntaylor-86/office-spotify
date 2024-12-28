@@ -19,7 +19,7 @@ class HomeController extends Controller
 
         // Checking if an AccessToken exists
         if (is_null($accessToken)) {
-            return redirect()->route('get-token');
+            return redirect()->route('token.index');
         }
 
         // Checking if the AccessToken is expired

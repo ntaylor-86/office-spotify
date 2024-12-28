@@ -6,6 +6,7 @@ use App\Models\AccessToken;
 use Carbon\Carbon;
 use SpotifyWebAPI\Session;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use SpotifyWebAPI\SpotifyWebAPI;
 
 class TokenController extends Controller
@@ -25,17 +26,25 @@ class TokenController extends Controller
         'user-read-playback-state'
     ];
 
-
     /**
      * Index
      * 
      */
     public function index()
     {
+        return Inertia::render('TokenIndex');
+    }
+
+    /**
+     * Token Get
+     * 
+     */
+    public function tokenGet()
+    {
         $session = new Session(
             clientId: env('SPOTIFY_CLIENT_ID'),
             clientSecret: env('SPOTIFY_CLIENT_SECRET'),
-            redirectUri: route('get-token')
+            redirectUri: route('token.get')
         );
         $api = new SpotifyWebAPI();
 
@@ -66,17 +75,17 @@ class TokenController extends Controller
     }
 
     /**
-     * Refresh Token
+     * Token Refresh
      * 
      */
-    public function refreshToken()
+    public function tokenRefresh()
     {
         $accessToken = AccessToken::first();
 
         $session = new Session(
             clientId: env('SPOTIFY_CLIENT_ID'),
             clientSecret: env('SPOTIFY_CLIENT_SECRET'),
-            redirectUri: route('get-token')
+            redirectUri: route('token.get')
         );
         $session->refreshAccessToken($accessToken->refreshToken);
 
