@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { ref } from 'vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
+import { Head, Link, usePoll, usePage } from '@inertiajs/vue3';
 
 defineProps({
     currentTrack: {
@@ -9,6 +9,18 @@ defineProps({
         required: true
     }
 });
+
+const page = usePage();
+
+const title = computed(() => {
+    if (page.props.currentTrack === null) {
+        return 'Home';
+    }
+
+    return page.props.currentTrack.artist;
+});
+
+usePoll(10000);
 </script>
 
 <style scoped>
@@ -27,16 +39,16 @@ defineProps({
 </style>
 
 <template>
-    <Head title="Home" />
+    <Head :title="title" />
 
     <AppLayout>
-        <!-- <template #header>
+        <template #header>
             <h2
                 class="text-xl font-semibold leading-tight text-gray-800"
             >
                 Home
             </h2>
-        </template> -->
+        </template>
 
         <div
             class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:pt-0"
@@ -129,11 +141,11 @@ defineProps({
 
                 <!-- Vote For This Track -->
                 <div v-if="currentTrack !== null">
-                    <hr class="mt-10">
+                    <hr class="mt-8">
 
                     <div class="mt-5 grid grid-cols-1">
                         <div class="text-indigo-600 tracking-widest">
-                            VOTE FOR THIS TRACK
+                            Vote for this track
                         </div>
                     </div>
 
