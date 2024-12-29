@@ -5,7 +5,7 @@ import { Head, Link, usePoll, usePage } from '@inertiajs/vue3';
 
 defineProps({
     currentTrack: {
-        type: Object,
+        type: [Object, null],
         required: true
     }
 });
@@ -57,7 +57,7 @@ usePoll(10000);
             <div class="bg-white px-8 py-6 shadow-md mt-10 rounded-lg" style="width: 490px;">
 
                 <div class="grid grid-cols-1 text-center">
-                    <div v-if="currentTrack === null || currentTrack.isPlaying == false" class="text-gray-600 font-bold tracking-widest">
+                    <div v-if="currentTrack === null || currentTrack?.isPlaying == false" class="text-gray-600 font-bold tracking-widest">
                         ⏸️ PAUSED ⏸️
                     </div>
                     <div v-else class="text-gray-600 font-bold tracking-widest">
@@ -103,12 +103,11 @@ usePoll(10000);
                     </div>
                 </div>
 
-                <div class="mt-5">
-
+                <!-- Progress Bar -->
+                <div v-if="currentTrack !== null" class="mt-5">
                     <div class="w-full bg-gray-200 rounded-full h-2.5">
                         <div class="bg-green-500 h-2.5 rounded-full" :style="{ 'width': currentTrack.progress + '%'}"></div>
                     </div>
-
                 </div>
 
                 <!-- Track Info -->
