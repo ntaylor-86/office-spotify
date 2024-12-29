@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\AccessToken;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use SpotifyWebAPI\SpotifyWebAPI;
 
 class SearchController extends Controller
 {
@@ -39,6 +40,23 @@ class SearchController extends Controller
             return redirect()->route('token.refresh');
         }
 
+        $api = new SpotifyWebAPI();
+        $api->setAccessToken($accessToken->accessToken);
+        $options = ['limit' => 10];
+        $results = $api->search($searchString,'track', $options);
+        // dd($results);
 
+        return Inertia::render('Search', [
+            'results' => $results->tracks->items
+        ]);
+    }
+
+    /**
+     * Add To Playlist
+     * 
+     */
+    public function addToPlaylist(Request $request)
+    {
+        dd($request);
     }
 }

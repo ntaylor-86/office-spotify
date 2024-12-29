@@ -11,19 +11,35 @@ use Inertia\Inertia;
 use SpotifyWebAPI\Session;
 use SpotifyWebAPI\SpotifyWebAPI;
 
+// Home
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
 
-Route::get('/token', [TokenController::class, 'index'])->name('token.index');
-Route::get('/token/get', [TokenController::class, 'tokenGet'])->name('token.get');
-Route::get('/token/refresh', [TokenController::class, 'tokenRefresh'])->name('token.refresh');
+// Token
 
-Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+Route::get('/token', [TokenController::class, 'index'])
+    ->name('token.index');
 
-Route::prefix('spotify')->name('spotify.')->group(function () {
-    Route::get('/current-track', [SpotifyController::class, 'currentTrack'])
-        ->name('current-track');
-});
+Route::get('/token/get', [TokenController::class, 'tokenGet'])
+    ->name('token.get');
+
+Route::get('/token/refresh', [TokenController::class, 'tokenRefresh'])
+    ->name('token.refresh');
+
+// Search
+
+Route::get('/search', [SearchController::class, 'index'])
+    ->name('search.index');
+
+Route::post('/search/add-to-playlist', [SearchController::class, 'addToPlaylist'])
+    ->name('search.add-to-playlist');
+
+
+// Route::prefix('spotify')->name('spotify.')->group(function () {
+//     Route::get('/current-track', [SpotifyController::class, 'currentTrack'])
+//         ->name('current-track');
+// });
 
 
 Route::get('/dashboard', function () {
@@ -31,9 +47,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
