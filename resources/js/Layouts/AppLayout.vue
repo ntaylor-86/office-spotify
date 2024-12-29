@@ -14,7 +14,7 @@ import NavLink from '@/Components/NavLink.vue';
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
-                                <Link :href="home">
+                                <Link :href="route('home')">
                                     <img src="images/spotify-icon.svg" class="h-9 inline">
                                     <span class="text-green-500 ml-2">
                                         GCI's Office Spotify
@@ -27,7 +27,7 @@ import NavLink from '@/Components/NavLink.vue';
                                 <NavLink :href="route('home')" :active="route().current('home')">
                                     Home
                                 </NavLink>
-                                <NavLink>
+                                <NavLink :href="route('search.index')" :active="route().current('search.index')">
                                     Search
                                 </NavLink>
                              </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SpotifyController;
 use App\Http\Controllers\TokenController;
 use Illuminate\Foundation\Application;
@@ -17,6 +18,7 @@ Route::get('/token', [TokenController::class, 'index'])->name('token.index');
 Route::get('/token/get', [TokenController::class, 'tokenGet'])->name('token.get');
 Route::get('/token/refresh', [TokenController::class, 'tokenRefresh'])->name('token.refresh');
 
+Route::get('/search', [SearchController::class, 'index'])->name('search.index');
 
 Route::prefix('spotify')->name('spotify.')->group(function () {
     Route::get('/current-track', [SpotifyController::class, 'currentTrack'])
