@@ -57,6 +57,17 @@ class SearchController extends Controller
      */
     public function addToPlaylist(Request $request)
     {
-        dd($request);
+        $validated = $request->validate([
+            'uri' => 'required'
+        ]);
+        dd($request->uri);
+
+        $accessToken = AccessToken::first();
+        $api = new SpotifyWebAPI();
+        $api->setAccessToken($accessToken->accessToken);
+        $api->addPlaylistTracks(env('SPOTIFY_PLAYLIST_ID'), [
+            $request->uri
+        ]);
+        dd('song added to playlist');
     }
 }
