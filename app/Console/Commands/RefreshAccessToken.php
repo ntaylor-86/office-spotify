@@ -14,7 +14,7 @@ class RefreshAccessToken extends Command
      *
      * @var string
      */
-    protected $signature = 'app:refresh-access-token';
+    protected $signature = 'spotify:refresh-access-token';
 
     /**
      * The console command description.
