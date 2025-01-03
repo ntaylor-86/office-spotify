@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 // use Illuminate\Support\Facades\Request;
 
 use App\Models\AccessToken;
+use App\Models\PlaylistTrack;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use SpotifyWebAPI\SpotifyWebAPI;
@@ -58,16 +59,44 @@ class SearchController extends Controller
     public function addToPlaylist(Request $request)
     {
         $validated = $request->validate([
-            'uri' => 'required'
+            'uri' => 'required',
+            'artist' => 'required',
+            'trackName' => 'required',
+            'albumImage' => 'required'
         ]);
-        dd($request->uri);
 
+        $response = [
+            'songAdded' => false,
+            'uri' => $request->uri,
+            'artist' => $request->artist,
+            'trackName' => $request->trackName,
+            'albumImage' => $request->albumImage
+        ];
+
+        // First seeing if the song already
+        // exists in the playlist
+        $trackExists = PlaylistTrack::query()
+                            ->where('uri', $request->uri)
+                            ->exists();
+
+        if ($trackExists) {
+            return Inertia::render('SongAddedToPlaylist', [
+                'response' => $response
+            ]);
+        }
+
+        // If the track does not already exist in the
+        // playlist, adding song to the playlist
         $accessToken = AccessToken::first();
         $api = new SpotifyWebAPI();
         $api->setAccessToken($accessToken->accessToken);
         $api->addPlaylistTracks(env('SPOTIFY_PLAYLIST_ID'), [
             $request->uri
         ]);
-        dd('song added to playlist');
+
+        $response['songAdded'] = true;
+        return Inertia::render('SongAddedToPlaylist', [
+            'response' => $response
+        ]);
     }
 }

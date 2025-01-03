@@ -16,10 +16,13 @@ const form = useForm({
     value: ''
 });
 
-function addTrack(trackUri) {
+function addTrack(trackUri, artist, trackName, albumImage) {
     console.log('going to add track ' + trackUri);
     var tempForm = useForm({
-        uri: trackUri
+        uri: trackUri,
+        artist: artist,
+        trackName: trackName,
+        albumImage: albumImage
     });
     tempForm.post(route('search.add-to-playlist'));
 };
@@ -79,6 +82,7 @@ function addTrack(trackUri) {
         </div>
 
         <div v-if="results.length > 0" class="pb-12">
+            <!-- Search Results -->
             <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
                     <section>
@@ -93,14 +97,17 @@ function addTrack(trackUri) {
                             <div class="col-span-3">
                                 <div class="flex flex-row">
                                     <div class="pr-2">
+                                        <!-- Album Cover -->
                                         <img :src="item.album.images[2].url" alt="Cover" class="rounded-md">
                                     </div>
                                     <div class="flex flex-col">
                                         <div class="text-gray-900 font-medium">
+                                            <!-- Track Name -->
                                             {{ item.name }}
                                         </div>
                                         <div class="w-full text-gray-600 text-sm">
-                                            <span>
+                                            <!-- Explicit Icon -->
+                                            <span v-if="item.explicit">
                                                 <img 
                                                     src="images/explicit.svg" 
                                                     alt="Explicit" 
@@ -108,24 +115,28 @@ function addTrack(trackUri) {
                                                     class="inline align-text-bottom mr-1"
                                                 >
                                             </span>
+                                            <!-- Artists Name -->
                                             {{ item.artists[0].name }}
                                         </div>
                                         <div class="text-gray-400 text-xs">
+                                            <!-- Release Date -->
                                             {{ item.album.release_date }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-span-1 text-center content-center">
-                                <PrimaryButton @click="addTrack(item.uri)">
+                                <!-- Add To Playlist Button -->
+                                <PrimaryButton 
+                                    @click="addTrack(
+                                        item.uri,
+                                        item.artists[0].name,
+                                        item.name,
+                                        item.album.images[0].url
+                                    )"
+                                >
                                     Add to playlist
                                 </PrimaryButton>
-                                <!-- <form method="post" :action="route('search.add-to-playlist')">
-                                    <input type="text" name="uri" :value="item.uri" hidden>
-                                    <PrimaryButton>
-                                        Add to playlist
-                                    </PrimaryButton>
-                                </form> -->
                             </div>
                         </div>
                     </section>
