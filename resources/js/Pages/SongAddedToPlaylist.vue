@@ -18,6 +18,7 @@ defineProps({
 
     <AppLayout>
         <template #header>
+            <!-- Heading -->
             <h2
                 v-if="response.songAdded"
                 class="text-xl font-semibold leading-tight text-gray-800"
@@ -37,6 +38,7 @@ defineProps({
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
                     <section>
                         <header>
+                            <!-- Secondary Heading -->
                             <h2 v-if="response.songAdded"  class="text-lg font-medium text-gray-900">
                                 🎸 Song added
                             </h2>
@@ -57,12 +59,14 @@ defineProps({
                     <section class="mt-6">
                         <div class="flex flex-row">
                             <div class="pr-6">
+                                <!-- Album Cover -->
                                 <img :src="response.albumImage" 
                                     class="w-72 border border-slate-300 rounded-lg shadow"
                                     alt="Album cover"
                                 >
                             </div>
                             <div class="flex flex-col justify-end">
+                                <!-- Aminated Emoji -->
                                 <div v-if="response.songAdded" class="pb-10">
                                     <img src="/images/big-smile.gif" alt="big-smile.gif" class="w-28 mx-auto">
                                 </div>
@@ -70,9 +74,11 @@ defineProps({
                                     <img src="/images/crying.gif" alt="crying.gif" class="w-28 mx-auto">
                                 </div>
 
+                                <!-- Track Name -->
                                 <div class="text-gray-900 font-medium text-2xl">
                                     {{ response.trackName }}
                                 </div>
+                                <!-- Artists Name -->
                                 <div class="text-gray-600 text-lg">
                                     {{ response.artist }}
                                 </div>
