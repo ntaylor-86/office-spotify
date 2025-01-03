@@ -3,13 +3,10 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\SpotifyController;
 use App\Http\Controllers\TokenController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use SpotifyWebAPI\Session;
-use SpotifyWebAPI\SpotifyWebAPI;
 
 // Home
 
@@ -35,11 +32,6 @@ Route::get('/search', [SearchController::class, 'index'])
 Route::post('/search/add-to-playlist', [SearchController::class, 'addToPlaylist'])
     ->name('search.add-to-playlist');
 
-
-// Route::prefix('spotify')->name('spotify.')->group(function () {
-//     Route::get('/current-track', [SpotifyController::class, 'currentTrack'])
-//         ->name('current-track');
-// });
 
 
 Route::get('/dashboard', function () {
