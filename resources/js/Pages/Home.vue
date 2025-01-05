@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { computed, ref } from 'vue';
-import { Head, Link, usePoll, usePage } from '@inertiajs/vue3';
+import { Head, Link, useForm,usePoll, usePage } from '@inertiajs/vue3';
 
 defineProps({
     currentTrack: {
@@ -19,6 +19,23 @@ const title = computed(() => {
 
     return page.props.currentTrack.artist;
 });
+
+class VoteTypes {
+    static #_UP = 1;
+    static #_DOWN = -1;
+
+    static get UP() { return this.#_UP; }
+    static get DOWN() { return this.#_DOWN; }
+}
+
+function voteForTrack(voteType, trackUri, albumImage) {
+    var tempForm = useForm({
+        voteType: voteType,
+        uri: trackUri,
+        albumImage: albumImage
+    });
+    tempForm.post(route('track.vote'));
+};
 
 usePoll(10000);
 </script>
@@ -164,6 +181,7 @@ usePoll(10000);
                         <button 
                             type="button" 
                             class="text-gray-700 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 uppercase tracking-widest"
+                            @click="voteForTrack(VoteTypes.UP, currentTrack.uri, currentTrack.cover)"
                         >
                             Yeah
                             <img src="images/+1.png" alt="yeah" class="w-5 inline">
@@ -171,6 +189,7 @@ usePoll(10000);
                         <button 
                             type="button" 
                             class="text-gray-700 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 uppercase tracking-widest"
+                            @click="voteForTrack(VoteTypes.DOWN, currentTrack.uri, currentTrack.cover)"
                         >
                             Nah
                             <img src="images/-1.png" alt="nah" class="w-5 inline">
