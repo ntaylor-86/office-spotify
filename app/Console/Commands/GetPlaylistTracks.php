@@ -105,7 +105,7 @@ class GetPlaylistTracks extends Command
         $this->info('Finished adding and updating all tracks in the playlist.');
 
         $oldTracks = PlaylistTrack::query()
-                        ->where('updated_at', '<=', now()->subHour())
+                        ->where('updated_at', '<=', now()->subMinutes(5))
                         ->get();
         $this->info(
             'Found ' . count($oldTracks) . ' old ' .
