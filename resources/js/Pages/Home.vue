@@ -7,7 +7,11 @@ defineProps({
     currentTrack: {
         type: [Object, null],
         required: true
-    }
+    },
+    currentQueue: {
+        type: [Array, null],
+        required: true
+    },
 });
 
 const page = usePage();
@@ -71,6 +75,7 @@ usePoll(10000);
             class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:pt-0"
         >
 
+            <!-- Now Playing -->
             <div class="bg-white px-8 py-6 shadow-md mt-10 rounded-lg" style="width: 490px;">
 
                 <div class="grid grid-cols-1 text-center">
@@ -197,7 +202,43 @@ usePoll(10000);
                     </div>
                 </div>
 
-            </div>
+            </div> <!-- /Now Playing -->
+
+            <!-- Queue -->
+            <div class="bg-white px-8 py-6 shadow-md mt-10 rounded-lg" style="width: 490px;">
+
+                <div class="grid grid-cols-1 text-center">
+                    <div class="text-gray-600 font-bold tracking-widest">
+                        🔄 QUEUE 🔄
+                    </div>
+                </div>
+
+                <div v-for="(item, key) in currentQueue" class="grid grid-cols gap-4 my-3 p-2 hover:bg-gray-100 rounded">
+                    <div class="col-span-3">
+                        <div class="flex flex-row">
+                            <div class="pr-2">
+                                <!-- Album Cover -->
+                                 <img :src="item.cover" alt="Cover" class="rounded-md w-20 h-auto">
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="text-gray-900 font-medium">
+                                    <!-- Track Name -->
+                                    {{ item.track }}
+                                </div>
+                                <div class="w-full text-gray-600 text-sm">
+                                    <!-- Artist -->
+                                    {{ item.artist }}
+                                </div>
+                                <div class="text-gray-400 text-xs">
+                                    <!-- Release Date -->
+                                    {{ item.releaseDate }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /Queue -->
+
         </div>
 
     </AppLayout>

@@ -30,8 +30,12 @@ class HomeController extends Controller
         $currentTrack = Spotify::GetCurrentTrack($accessToken->accessToken);
         // dd($currentTrack);
 
+        $currentQueue = Spotify::GetCurrentQueue($accessToken->accessToken);
+        
+
         return Inertia::render('Home', [
-            'currentTrack' => $currentTrack['data']
+            'currentTrack' => $currentTrack['data'],
+            'currentQueue' => $currentQueue,
         ]);
     }
 }
