@@ -23,7 +23,8 @@ class TokenController extends Controller
         'playlist-modify-public',
         'user-read-private',
         'user-read-email',
-        'user-read-playback-state'
+        'user-read-playback-state',
+        'user-modify-playback-state',
     ];
 
     /**
