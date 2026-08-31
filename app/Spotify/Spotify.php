@@ -56,4 +56,43 @@ class Spotify
         }
 
     }
+
+    /**
+     * GetCurrentQueue
+     * 
+     * @return array
+     */
+    public static function GetCurrentQueue(string $accessToken)
+    {
+        try {
+            $api = new SpotifyWebAPI();
+            $api->setAccessToken($accessToken);
+            $currentQueue = $api->getMyQueue();
+
+            $queue = collect($currentQueue->queue);
+            $queue = $queue->map(function ($item) {
+
+                // Getting the release year from the Spotify API
+                $regex = "/\d{4}/";
+                $releaseDate = $item->album->release_date;
+                if (preg_match($regex, $releaseDate, $matches) > 0) {
+                    $releaseDate = $matches[0];
+                }
+
+                return [
+                    'uri' => $item->uri,
+                    'artist' => $item->artists[0]->name,
+                    'track' => $item->name,
+                    'releaseDate' => $releaseDate,
+                    'cover' => $item->album->images[0]->url,
+                ];
+            });
+
+            return $queue->toArray();
+        } catch (\Throwable $th) {
+            return [
+                'error' => $th->getMessage()
+            ];
+        }
+    }
 }
