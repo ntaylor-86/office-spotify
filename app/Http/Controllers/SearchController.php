@@ -45,7 +45,6 @@ class SearchController extends Controller
         $api->setAccessToken($accessToken->accessToken);
         $options = ['limit' => 10];
         $results = $api->search($searchString,'track', $options);
-        // dd($results);
 
         return Inertia::render('Search', [
             'results' => $results->tracks->items
@@ -75,24 +74,26 @@ class SearchController extends Controller
 
         // First seeing if the song already
         // exists in the playlist
-        $trackExists = PlaylistTrack::query()
-                            ->where('uri', $request->uri)
-                            ->exists();
+        // $trackExists = PlaylistTrack::query()
+        //                     ->where('uri', $request->uri)
+        //                     ->exists();
 
-        if ($trackExists) {
-            return Inertia::render('SongAddedToPlaylist', [
-                'response' => $response
-            ]);
-        }
+        // if ($trackExists) {
+        //     return Inertia::render('SongAddedToPlaylist', [
+        //         'response' => $response
+        //     ]);
+        // }
 
         // If the track does not already exist in the
         // playlist, adding song to the playlist
         $accessToken = AccessToken::first();
         $api = new SpotifyWebAPI();
         $api->setAccessToken($accessToken->accessToken);
-        $api->addPlaylistTracks(env('SPOTIFY_PLAYLIST_ID'), [
-            $request->uri
-        ]);
+        $api->queue($request->uri);
+
+        // $api->addPlaylistTracks(env('SPOTIFY_PLAYLIST_ID'), [
+        //     $request->uri
+        // ]);
 
         $response['songAdded'] = true;
         return Inertia::render('SongAddedToPlaylist', [
