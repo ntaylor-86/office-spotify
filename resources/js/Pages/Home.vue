@@ -168,40 +168,6 @@ usePoll(10000);
                         </span>
                     </div>
                 </div>
-
-                <!-- Vote For This Track -->
-                <div v-if="currentTrack !== null">
-                    <hr class="mt-8">
-
-                    <div class="mt-5 grid grid-cols-1">
-                        <div class="text-indigo-600 tracking-widest">
-                            Vote for this track
-                        </div>
-                    </div>
-
-                    <div class="mt-4 grid grid-cols-2 gap-4">
-                    </div>
-
-                    <div class="">
-                        <button 
-                            type="button" 
-                            class="text-gray-700 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 uppercase tracking-widest"
-                            @click="voteForTrack(VoteTypes.UP, currentTrack.uri, currentTrack.cover)"
-                        >
-                            Yeah
-                            <img src="images/+1.png" alt="yeah" class="w-5 inline">
-                        </button>
-                        <button 
-                            type="button" 
-                            class="text-gray-700 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 uppercase tracking-widest"
-                            @click="voteForTrack(VoteTypes.DOWN, currentTrack.uri, currentTrack.cover)"
-                        >
-                            Nah
-                            <img src="images/-1.png" alt="nah" class="w-5 inline">
-                        </button>
-                    </div>
-                </div>
-
             </div> <!-- /Now Playing -->
 
             <!-- Queue -->
