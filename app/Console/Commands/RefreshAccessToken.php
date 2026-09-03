@@ -21,7 +21,7 @@ class RefreshAccessToken extends Command
      *
      * @var string
      */
-    protected $description = 'Refresh the Spotiy API Access Token';
+    protected $description = 'Refresh the Spotify API Access Token';
 
     /**
      * Execute the console command.
@@ -48,7 +48,7 @@ class RefreshAccessToken extends Command
             'Token is expiring in ' . 
             $accessToken->expirationTime->diffForHumans() . '.'
         );
-        $this->info('Refresing Access Token now.');
+        $this->info('Refreshing Access Token now.');
 
         // Refreshing Access Token
         $session = new Session(
